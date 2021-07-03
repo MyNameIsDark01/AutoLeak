@@ -1,5 +1,0 @@
-requests
-tweepy
-pillow
-colorama
-datetime

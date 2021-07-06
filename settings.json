@@ -1,0 +1,24 @@
+{
+	"name": "Name",
+	"footer": "Footer",
+	"language": "en",
+	"placeholderImage": "",
+	"watermark": "",
+	"delay": 5,
+	"twitter": {
+		"isEnabled": false,
+		"apiKey": "",
+		"apiSecret": "",
+		"accessToken": "",
+		"accessTokenSecret": "",
+		"tweetUpdate": true,
+		"tweetAes": true,
+		"tweetCosmetics": true,
+		"tweetNews": true,
+		"cosmeticText": "New Cosmetics available!"
+	},
+	"apiKey": {
+		"fortnite-api": "",
+		"fortniteapi-io": ""
+	}
+}

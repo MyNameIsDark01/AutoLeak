@@ -108,7 +108,7 @@ class BaseIcon:
                 text_width, text_height = font.getsize(text)
 
             if len(text.split('\n')) > 2:
-                text_width, text_height = text_width / 2, text_height
+                text_width = text_width / 2
 
             x = (512 - text_width) / 2
             y = 465 - text_height

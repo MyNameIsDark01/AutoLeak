@@ -2,7 +2,7 @@
 
 AutoLeak is a terminal-based utility to generate all of the latest leaks in Fortnite, with some bonus features as well.
 
-Make sure to check out our Wiki (to do), with info on how to utilitize [**settings.json**](www.google.com)
+Make sure to check out our Wiki (to do), with info on how to utilitize **settings.json**
 
 # Features
 

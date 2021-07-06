@@ -1,6 +1,9 @@
 import httpx
+import json
 
-from Rest.Models.FortniteApi import NewCosmetics, Build
+from typing import Union, List
+
+from Rest.Models.FortniteApi import Cosmetic, NewCosmetics, Build, NewsV2
 
 
 class FortniteApi:
@@ -10,23 +13,56 @@ class FortniteApi:
         self.key = data.key[0]
 
         self.headers = {
-            'language': self.language,
-            'authorization': self.key
+            'x-api-key': self.key
         }
 
-    def new_cosmetics(self):
+        self.params = {
+            'language': self.language
+        }
+
+    def new_cosmetics(self) -> Union[None, NewCosmetics]:
         res = self.http.get(
             url='https://fortnite-api.com/v2/cosmetics/br/new',
-            headers=self.headers
+            headers=self.headers,
+            params=self.params
         )
         if res.status_code == 200:
             data = res.json()['data']
             return NewCosmetics(data)
 
-    def get_build(self):
+    def get_build(self) -> Union[None, Build]:
         res = self.http.get(
-            url='https://fortnite-api.com/v2/aes'
+            url='https://fortnite-api.com/v2/aes',
+            headers=self.headers
         )
         if res.status_code == 200:
             data = res.json()['data']
             return Build(data)
+
+    def search_cosmetic(self, cosmetic: str = None, pak_id: Union[str, int] = None) -> Union[None, List[Cosmetic]]:
+        if cosmetic:
+            self.params.update(name=cosmetic)
+            self.params.update(matchMethod='contains')
+        elif pak_id:
+            self.params.update(dynamicPakId=pak_id)
+
+        res = self.http.get(
+            url="https://fortnite-api.com/v2/cosmetics/br/search/all",
+            headers=self.headers,
+            params=self.params
+        )
+
+        if res.status_code == 200:
+            data = res.json()['data']
+            return [Cosmetic(i) for i in data]
+
+    def get_news(self):
+        res = self.http.get(
+            url="https://fortnite-api.com/v2/news/br",
+            headers=self.headers,
+            params=self.params
+        )
+
+        if res.status_code == 200:
+            data = res.json()['data']
+            return NewsV2(data)

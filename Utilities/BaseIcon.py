@@ -97,26 +97,29 @@ class BaseIcon:
             
             new_text = ""
             for des in textwrap.wrap(text, width=100):
-                new_text += f'\n{des}'
+                new_text += f'{des}\n'
             text = new_text  # Split the Description
             text_width, text_height = font.getsize(text)
-            text_width, text_height = text_width / 2, text_height * 2
+            if len(text.split('\n')) > 2:
+                text_width, text_height = text_width / 2, text_height
             
             while text_width > 512 - 4:
                 text_size = text_size - 1
                 font = ImageFont.truetype(f'Assets/BaseIcon/fonts/{self.secondary_font}', size=text_size)
                 text_width, text_height = font.getsize(text)
-                text_width, text_height = text_width / 2, text_height * 2
+                if len(text.split('\n')) > 2:
+                    text_width, text_height = text_width / 2, text_height
 
             x = (512 - text_width) / 2
-            y = 450 - text_height / 2
+            y = 465 - text_height
 
             c.multiline_text(
                 (x, y), 
                 text,
-                fill='white', 
+                fill='white',
+                align='center', 
                 font=font, 
-            )
+            )  
         else:
             text_width, text_height = font.getsize(text)
             x = (512 - text_width) / 2

@@ -122,7 +122,7 @@ class NewsGenerator:
                 text_width, text_height = font.getsize(title)
 
             canvas.text(
-                (ImageUtil.center_x(text_width, card.width), ImageUtil.center_x(text_height, card.height)),
+                ImageUtil.center_x(text_width, card.width, (card.height - text_height)/2),
                 title,
                 (255, 255, 255),
                 font=font,

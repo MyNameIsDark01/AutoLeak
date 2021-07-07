@@ -12,6 +12,8 @@ from Services.NewUpdate import BuildUpdate
 from Services.Weapon import Weapon
 from Services.Cosmetic import CosmeticSearch
 from Services.News import News
+from Services.Shop import ShopUpdate
+from Services.Section import ShopSection
 
 
 from Utilities.Errors import NoDigit
@@ -42,8 +44,13 @@ class Main:
             self.tweetUpdate = twitter.get('tweetUpdate', False)
             self.tweetAes = twitter.get('tweetAes', False)
             self.tweetCosmetics = twitter.get('tweetCosmetics', False)
-            self.tweetNews = twitter.get('tweetNews', False)
+            self.tweetNews = True
+            self.tweetShop = True
+            self.tweetSection = True
+
             self.cosmeticText = twitter.get('cosmeticText', '')
+            self.shopText = twitter.get('shopText', '')
+            self.shopSectionText = twitter.get('shopSectionText', '')
             
             if twitter.get('isEnabled'):
                 apiKey = twitter.get('apiKey')
@@ -58,6 +65,8 @@ class Main:
                 self.tweetAes = False
                 self.tweetCosmetics = False
                 self.tweetNews = False
+                self.tweetShop = False
+                self.tweetSection = False
 
             self.key = [
                 settings.get('apiKey', {})[i]
@@ -131,6 +140,8 @@ class Main:
         weapon = Weapon(self)
         imageUtil = ImageUtil()
         news = News(self)
+        shopgen = ShopUpdate(self)
+        shopsection = ShopSection(self)
 
         choices = {
             1: build.main,
@@ -139,7 +150,9 @@ class Main:
             4: cosmetic.search,
             5: weapon.search_weapon,
             6: imageUtil.merge_icons,
-            7: news.main
+            7: news.main,
+            8: shopsection.main,
+            9: shopgen.main
         }
 
         if isinstance(x, str):

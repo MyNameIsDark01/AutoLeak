@@ -3,7 +3,7 @@ import json
 
 from typing import Union, List
 
-from Rest.Models.FortniteApi import Cosmetic, NewCosmetics, Build, NewsV2
+from Rest.Models.FortniteApi import Cosmetic, NewCosmetics, Build, NewsV2, ShopV2
 
 
 class FortniteApi:
@@ -56,6 +56,17 @@ class FortniteApi:
             data = res.json()['data']
             return [Cosmetic(i) for i in data]
 
+    def get_shop(self):
+        res = self.http.get(
+            url="https://fortnite-api.com/v2/shop/br/combined",
+            headers=self.headers,
+            params=self.params
+        )
+
+        if res.status_code == 200:
+            data = res.json()['data']
+            return ShopV2(data)
+
     def get_news(self):
         res = self.http.get(
             url="https://fortnite-api.com/v2/news/br",
@@ -66,3 +77,13 @@ class FortniteApi:
         if res.status_code == 200:
             data = res.json()['data']
             return NewsV2(data)
+    
+    def shop_sections(self):
+        res = self.http.get(
+            url="http://62.171.128.234:2131/api/v1/shopsection",
+            params=self.params
+        )
+
+        if res.status_code == 200:
+            data = res.json()['data']
+            return data

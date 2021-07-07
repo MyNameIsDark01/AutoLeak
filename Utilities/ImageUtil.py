@@ -42,10 +42,10 @@ class ImageUtil:
             return Image.open(res.raw).convert('RGBA')
     
     @staticmethod
-    def center_x(foreground_width: int, background_width: int):
+    def center_x(foreground_width: int, background_width: int, height: int):
         """Return the tuple necessary for horizontal centering and an optional vertical distance."""
 
-        return int(background_width / 2) - int(foreground_width / 2)
+        return int(background_width / 2) - int(foreground_width / 2), height
 
     @staticmethod
     def ratio_resize(image: Image.Image, max_width: int, max_height: int):

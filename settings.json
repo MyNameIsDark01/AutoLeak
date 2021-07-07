@@ -1,12 +1,12 @@
 {
-	"name": "Name",
-	"footer": "Footer",
+	"name": "AUTOLEAK",
+	"footer": "#Fortnite #FortniteNews",
 	"language": "en",
 	"placeholderImage": "",
 	"watermark": "",
 	"delay": 5,
 	"twitter": {
-		"isEnabled": false,
+		"isEnabled": true,
 		"apiKey": "",
 		"apiSecret": "",
 		"accessToken": "",
@@ -14,8 +14,9 @@
 		"tweetUpdate": true,
 		"tweetAes": true,
 		"tweetCosmetics": true,
-		"tweetNews": true,
-		"cosmeticText": "New Cosmetics available!"
+		"cosmeticText": "New Cosmetics available!",
+		"shopText": "#Fortnite Item Shop for {date}",
+		"shopSectionText": "#Fortnite Shop Sections Update:\n\n{sections}\n[{name}]"
 	},
 	"apiKey": {
 		"fortnite-api": "",

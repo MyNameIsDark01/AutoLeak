@@ -36,6 +36,8 @@ class News:
             
             if not os.path.isfile('Cache/news.json'):
                 open('Cache/news.json', 'w+').write(res.json())
+                time.sleep(self.delay)
+                continue
 
             old_news = NewsV2(json.loads(open('Cache/news.json').read()))
 
@@ -63,7 +65,7 @@ class News:
         try:
             self.twitter.update_with_media(
                 "Cache/br.gif",
-                f"#Fortnite News Update for {date}:\n\n{feed}\n[{name}]"
+                f"#Fortnite News Update for {date}:\n\n{feed}\n\n[{name}]"
             )
             print(Fore.GREEN + "Tweeted image!")
         except Exception as e:

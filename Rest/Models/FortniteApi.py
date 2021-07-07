@@ -14,6 +14,39 @@ class NewCosmetics:
         return json.dumps(self, default=lambda o: o.__dict__)
 
 
+class ShopV2:
+    def __init__(self, data):
+        self.hash = data.get('hash')
+        self.date = data.get('date')
+        self.featured = ShopCategory(data.get('featured'))
+        self.daily = ShopCategory(data.get('daily'))
+
+    def json(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
+
+
+class ShopCategory:
+    def __init__(self, data):
+        self.name = data.get('name')
+        self.entries = [ShopEntry(i) for i in data.get('entries')]
+
+
+class ShopEntry:
+    def __init__(self, data):
+        self.regularPrice = data.get('regularPrice')
+        self.finalPrice = data.get('finalPrice')
+        self.bundle = ShopBundle(data.get('bundle')) if data.get('bundle') else None
+        self.banner = Information(data.get('banner')) if data.get('banner') else None
+        self.items = [Cosmetic(i) for i in data.get('items')]
+
+
+class ShopBundle:
+    def __init__(self, data):
+        self.name = data.get('name')
+        self.info = data.get('info')
+        self.image = data.get('image')
+
+
 class Cosmetic:
     def __init__(self, data):
         self.id = data.get('id')
@@ -35,9 +68,17 @@ class Cosmetic:
 class Information:
     def __init__(self, data):
         self.value = data.get('value')
-        self.displayValue = data.get('displayValue')
-        self.text = data.get('text')
-        self.image = data.get('image')
+        if data.get('intensity'):
+            self.intensity = data.get('intensity')
+
+        if data.get('displayValue'):
+            self.displayValue = data.get('displayValue')
+
+        if data.get('text'):
+            self.text = data.get('text')
+        
+        if data.get('image'):
+            self.image = data.get('image')
         self.backendValue = data.get('backendValue')
 
 
@@ -74,6 +115,7 @@ class DynamicKey:
         self.pakGuid = data.get('pakGuid')
         self.key = data.get('key')
 
+
 class NewsV2:
     def __init__(self, data):
         self.hash = data.get('hash')
@@ -83,7 +125,8 @@ class NewsV2:
 
     def json(self):
         return json.dumps(self, default=lambda o: o.__dict__)
-        
+
+
 class BRNewsV2:
     def __init__(self, data):
         self.id = data.get('id')

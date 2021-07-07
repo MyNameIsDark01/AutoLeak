@@ -40,6 +40,8 @@ class BuildUpdate:
 
             if not os.path.isfile('Cache/Aes.json'):
                 open('Cache/Aes.json', 'w+').write(aes.json())
+                time.sleep(self.delay)
+                continue
 
             old_aes = Build(json.loads(open('Cache/aes.json').read()))
 
@@ -67,10 +69,13 @@ class BuildUpdate:
 
             new_cosmetics = self.api.new_cosmetics()
             if not new_cosmetics:
+                time.sleep(self.delay)
                 continue
 
             if not os.path.isfile('Cache/newCosmetics.json'):
                 open('Cache/newCosmetics.json', 'w+').write(new_cosmetics.json())
+                time.sleep(self.delay)
+                continue
 
             old_cosmetics = NewCosmetics(json.loads(
                 open('Cache/newCosmetics.json').read()))
@@ -131,7 +136,7 @@ class BuildUpdate:
 
         try:
             self.twitter.update_status(f"[{name}] Current Fortnite build:\n\n{build}\n\n{footer}")
-            print(Fore.GREEN+"Tweeted current build!")
+            print(Fore.GREEN+ "Tweeted current build!")
         except Exception as e:
             print(Fore.RED + f"Failed to tweet build! ({e})")
 
@@ -142,7 +147,7 @@ class BuildUpdate:
 
         try:
             self.twitter.update_status(f"[{name}] Current Fortnite AES Key:\n\n0x{key}\n\n{footer}")
-            print(Fore.GREEN+"Tweeted current aes key!")
+            print(Fore.GREEN+ "Tweeted current aes key!")
         except Exception as e:
             print(Fore.RED + f"Failed to tweet aes key! ({e})")
 
@@ -152,6 +157,6 @@ class BuildUpdate:
 
         try:
             self.twitter.update_with_media(f'Cache/NewCosmetics.jpg', f'[{name}] {text}')
-            print(Fore.GREEN+"Tweeted new cosmetics!")
+            print(Fore.GREEN+ "Tweeted new cosmetics!")
         except Exception as e:
             print(Fore.RED + f"Failed to tweet new cosmetics! ({e})")

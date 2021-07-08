@@ -80,7 +80,7 @@ class FortniteApi:
     
     def shop_sections(self):
         res = self.http.get(
-            url="http://62.171.128.234:2131/api/v1/shopsection",
+            url="http://api.fn-utility.tk:2131/api/v1/shopsection",
             params=self.params
         )
 

@@ -42,4 +42,3 @@ class CosmeticSearch:
         else:
             image = image_list[0]
 
-        image.show()

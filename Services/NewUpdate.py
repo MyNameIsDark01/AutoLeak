@@ -40,6 +40,7 @@ class BuildUpdate:
 
             if not os.path.isfile('Cache/Aes.json'):
                 open('Cache/Aes.json', 'w+').write(aes.json())
+                count += 1
                 time.sleep(self.delay)
                 continue
 
@@ -74,6 +75,7 @@ class BuildUpdate:
 
             if not os.path.isfile('Cache/newCosmetics.json'):
                 open('Cache/newCosmetics.json', 'w+').write(new_cosmetics.json())
+                count += 1
                 time.sleep(self.delay)
                 continue
 

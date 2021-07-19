@@ -69,4 +69,4 @@ class News:
             )
             print(Fore.GREEN + "Tweeted image!")
         except Exception as e:
-            print(Fore.RED + "News Feed [{e}]")
+            print(Fore.RED + f"News Feed [{e}]")

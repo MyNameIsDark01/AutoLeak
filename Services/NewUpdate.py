@@ -58,12 +58,12 @@ class BuildUpdate:
             if build != old_build:
                 print(Fore.YELLOW + f'\nDetected build update! -> [{count}]')
                 if self.tweetUpdate:
-                    self.tweet_build()
+                    self.tweet_build(build)
 
             if aeskey != old_aeskey:
                 print(Fore.YELLOW + f'Detected Aes update! -> [{count}]')
                 if self.tweetAes:
-                    self.tweet_aes()
+                    self.tweet_aes(aeskey)
 
                 for filename in glob.glob('Cache/images/*.png'):
                     os.remove(filename)
@@ -131,8 +131,7 @@ class BuildUpdate:
         print(f"IMAGE GENERATING COMPLETE - Generated images in {round(time.time() - start_time, 2)} seconds")
         print("!  !  !  !  !  !  !")
 
-    def tweet_build(self):
-        build = self.aes.build
+    def tweet_build(self, build):
         name = self.name
         footer = self.footer
 
@@ -142,8 +141,7 @@ class BuildUpdate:
         except Exception as e:
             print(Fore.RED + f"Failed to tweet build! ({e})")
 
-    def tweet_aes(self):
-        key = self.aes.build
+    def tweet_aes(self, key):
         name = self.name
         footer = self.footer
 

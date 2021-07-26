@@ -7,13 +7,15 @@ from Utilities.ImageUtil import ImageUtil
 
 class Weapon:
     def __init__(self, data):
+        self.log = data.log
+        
         self.api = data.api[1]
         self.language = data.language
 
     def search_weapon(self):
         weapons = None
 
-        method = input('\nDo you want to input an ID (1) or a name (2)? ')
+        method = input('Do you want to input an ID (1) or a name (2)? ')
         ask = input(Fore.GREEN + '\nWhat weapon do you want to grab? ')
         if method == '1':
             weapons = self.api.search_weapon(weapon_id=ask)

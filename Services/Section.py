@@ -7,6 +7,8 @@ from colorama import Fore
 
 class ShopSection:
     def __init__(self, data):
+        self.log = data.log
+
         self.name = data.name
         self.api = data.api[0]
         self.delay = data.delay
@@ -19,7 +21,7 @@ class ShopSection:
         count = 1
 
         while True:
-            print(Fore.YELLOW + f"Checking for changes: -> [{count}]")
+            self.log.info(Fore.YELLOW + f"Checking for changes: -> [{count}]")
             res = self.api.shop_sections()
             if not res:
                 time.sleep(self.delay)
@@ -31,7 +33,7 @@ class ShopSection:
             old = json.loads(open("Cache/section.json").read())
 
             if res[-1]['hash'] != old[-1]['hash']:
-                print(Fore.GREEN + "Shop sections changed!")
+                self.log.info(Fore.GREEN + "Shop sections changed!")
                 open("Cache/section.json", "w+").write(json.dumps(res))
 
                 if self.tweetSection:
@@ -53,6 +55,6 @@ class ShopSection:
             self.twitter.update_status(
                 status=text.format(sections=sections, name=name)
             )
-            print(Fore.GREEN + 'Tweeted shop sections!')
+            self.log.info(Fore.GREEN + 'Tweeted shop sections!')
         except Exception as e:
-            print(Fore.RED + f"Failed to tweet shop sections [{e}]")
+            self.log.error(Fore.RED + f"Failed to tweet shop sections [{e}]")

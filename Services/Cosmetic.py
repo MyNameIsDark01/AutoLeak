@@ -7,11 +7,14 @@ from Utilities.ImageUtil import ImageUtil
 
 class CosmeticSearch:
     def __init__(self, data):
+        self.log = data.log
+        self.platform = data.platform
+
         self.api = data.api[0]
         self.language = data.language
 
     def search(self):
-        print(Fore.GREEN + '\nWhat cosmetic do you want to grab?')
+        self.log.info(Fore.GREEN + 'What cosmetic do you want to grab?')
         ask = input()
 
         cosmetic = self.api.search_cosmetic(cosmetic=ask)
@@ -25,10 +28,11 @@ class CosmeticSearch:
         else:
             image = image_list[0]
 
-        image.show()
+        if self.platform == 'Windows':
+            image.show()
 
     def pak(self):
-        print('\nWhat number pak do you want to grab?')
+        self.log.info('What number pak do you want to grab?')
         ask = input()
 
         cosmetic = self.api.search_cosmetic(pak_id=ask)
@@ -41,4 +45,7 @@ class CosmeticSearch:
             image = ImageUtil.merge_icons(image_list, f'{ask}.jpg')
         else:
             image = image_list[0]
+
+        if self.platform == 'Windows':
+            image.show()
 

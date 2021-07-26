@@ -11,6 +11,8 @@ from Utilities.ShopGenerator import ShopGenerator
 
 class ShopUpdate:
     def __init__(self, data):
+        self.log = data.log
+
         self.api = data.api[0]
         self.language = data.language
 
@@ -24,7 +26,7 @@ class ShopUpdate:
         count = 1
 
         while True:
-            print(Fore.YELLOW + f'Checking for changes: -> [{count}]')
+            self.log.info(Fore.YELLOW + f'Checking for changes: -> [{count}]')
             res = self.api.get_shop()
             if not res:
                 time.sleep(self.delay)
@@ -37,7 +39,7 @@ class ShopUpdate:
 
             old_shop = ShopV2(json.loads(open('Cache/shop.json').read()))
             if res.hash != old_shop.hash:
-                print(Fore.GREEN + "Shop changed, generating now...")
+                self.log.info(Fore.GREEN + "Shop changed, generating now...")
                 open('Cache/shop.json', 'w+').write(res.json())
 
                 self.create_shop(res)
@@ -63,6 +65,6 @@ class ShopUpdate:
                 "Cache/itemshop.jpg",
                 status=text.format(date=date)
             )
-            print(Fore.GREEN + f"Tweeted current shop image.")
+            self.log.info(Fore.GREEN + f"Tweeted current shop image.")
         except Exception as e:
-            print(Fore.RED + f"Failed to tweet shop image [{e}]")
+            self.log.error(Fore.RED + f"Failed to tweet shop image [{e}]")

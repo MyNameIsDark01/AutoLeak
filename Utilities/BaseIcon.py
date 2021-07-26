@@ -10,6 +10,7 @@ from Utilities.ImageUtil import ImageUtil
 
 class BaseIcon:
     def __init__(self, data):
+        self.log = data.log
         self.language = data.language
 
         self.primary_font = ImageUtil.get_font(self.language, 'name')
@@ -178,7 +179,7 @@ class BaseIcon:
     def main(self, data):
         icon = data
 
-        print(Fore.BLUE + f"\nLoading {icon.id}...")
+        self.log.info(Fore.BLUE + f"Loading {icon.id}...")
 
         if os.path.isfile(f'Cache/images/{icon.id}.png'):
             return Image.open(f'Cache/images/{icon.id}.png')
@@ -194,15 +195,23 @@ class BaseIcon:
         if icon.introduction:
             self.draw_to_bottom(ret, c, icon, 'left', icon.introduction)
 
-        check_tags = re.findall(r'Cosmetics.Source.\w+', ' '.join(icon.gameplayTags)) + \
-            re.findall(r'Athena.ItemAction.\w+', ' '.join(icon.gameplayTags))
-
+        check_tags = list(
+            filter(
+                lambda x: x.startswith('Cosmetics.Source.') or x.startswith('Athena.ItemAction.'),
+                icon.gameplayTags
+            )
+        )
+        
         if len(check_tags) > 0:
             self.draw_to_bottom(
                 ret, c, icon, 'right', check_tags[0].split('.')[-1])
 
-        userfacing = re.findall(
-            r'Cosmetics.UserFacingFlags.\w+', ' '.join(icon.gameplayTags))
+        userfacing = list(
+            filter(
+                lambda x: x.startswith('Cosmetics.UserFacingFlags.'),
+                icon.gameplayTags
+            )
+        )
 
         if len(userfacing) > 0:
             self.draw_user_flacing(ret)

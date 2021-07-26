@@ -9,6 +9,7 @@ from typing import List, Union
 class ImageUtil:
     @staticmethod
     def open():
+        ## NEVER FINISHED ## 
         return
 
     @staticmethod
@@ -62,7 +63,6 @@ class ImageUtil:
         if not datas:
             datas = [Image.open(i) for i in glob.glob('Cache/images/*.png')]
 
-        print('\nMerging images...')
         row_n = len(datas)
         rowslen = ceil(sqrt(row_n))
         columnslen = round(sqrt(row_n))

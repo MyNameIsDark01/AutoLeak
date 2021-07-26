@@ -12,6 +12,7 @@ from Utilities.NewsGenerator import NewsGenerator
 
 class News:
     def __init__(self, data):
+        self.log = data.log
         self.name = data.name
 
         self.api = data.api[0]
@@ -28,14 +29,16 @@ class News:
         count = 1
 
         while True:
-            print(f"Checking for changes in news feed: -> [{count}]")
+            self.log.info(Fore.YELLOW + f"Checking for changes in news feed: -> [{count}]")
             res = self.api.get_news()
             if not res:
+                count += 1
                 time.sleep(self.delay)
                 continue
             
             if not os.path.isfile('Cache/news.json'):
                 open('Cache/news.json', 'w+').write(res.json())
+                count += 1
                 time.sleep(self.delay)
                 continue
 
@@ -47,15 +50,15 @@ class News:
                 self.date = datetime.datetime.utcnow().strftime("%d/%m/%Y")
                 self.feed = "\n".join([f"• {i.title}" for i in res.motds])
 
-                print(Fore.GREEN + f"News changed at {self.date}")
+                self.log.info(Fore.GREEN + f"News changed at {self.date}")
                 newsgenerator = NewsGenerator(self)
                 newsgenerator.main(res.motds)
 
                 if self.tweetNews:
                     self.tweet_news()
 
-            time.sleep(self.delay)
             count += 1
+            time.sleep(self.delay)
         
     def tweet_news(self):
         name = self.name
@@ -67,6 +70,6 @@ class News:
                 "Cache/br.gif",
                 f"#Fortnite News Update for {date}:\n\n{feed}\n\n[{name}]"
             )
-            print(Fore.GREEN + "Tweeted image!")
+            self.log.info(Fore.GREEN + "Tweeted image!")
         except Exception as e:
-            print(Fore.RED + f"News Feed [{e}]")
+            self.log.error(Fore.RED + f"News Feed [{e}]")

@@ -1,6 +1,12 @@
 import json
 import colorama
+import logging
+import colorama
+import coloredlogs
+import platform
+import os
 
+from logging.handlers import RotatingFileHandler
 from getch import pause
 from colorama import Fore
 from typing import Union, List
@@ -28,7 +34,11 @@ colorama.init(autoreset=True)
 class Main:
     def __init__(self):
         try:
+            self.platform = platform.system()
             self.version = 1.4
+            self.log = logging.getLogger('AutoLeak')
+            coloredlogs.install(fmt="[%(asctime)s] %(message)s", datefmt="%I:%M:%S", logger=self.log)
+            colorama.init(autoreset=True)
             
             settings = json.loads(open("settings.json").read())
 
@@ -165,6 +175,16 @@ class Main:
 
 
 if __name__ == '__main__':
+    ## if os.path.isfile('log.txt'):
+    ##    os.remove('log.txt')
+
+    logging.basicConfig(handlers=[
+            RotatingFileHandler(filename='log.txt', mode='w', maxBytes=512000, backupCount=4)
+        ],
+        format='[%(levelname)s] [%(asctime)s] %(message)s', 
+        datefmt='%I:%M:%S'
+    )
+
     try:
         Main().main()
     except KeyboardInterrupt:

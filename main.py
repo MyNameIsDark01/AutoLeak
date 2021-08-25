@@ -40,7 +40,7 @@ class Main:
             coloredlogs.install(fmt="[%(asctime)s] %(message)s", datefmt="%I:%M:%S", logger=self.log)
             colorama.init(autoreset=True)
             
-            settings = json.loads(open("test.json").read())
+            settings = json.loads(open("settings.json").read())
 
             self.name = settings.get('name')
             self.footer = settings.get('footer')

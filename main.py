@@ -128,6 +128,7 @@ class Main:
         print("(7) - Check for a change in News Feed")
         print("(8) - Check for a change in Shop Sections")
         print("(9) - Check for a change in Item Shop")
+        print("(10) - Generate Challenge bundle")
 
     def check_twitter_auth(self):
         if self.twitter.verify_credentials() is False:

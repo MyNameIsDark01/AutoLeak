@@ -56,12 +56,12 @@ class NewsGenerator:
         background.paste(news_image, (0, 0))
 
         # Blu
-        blu = Image.open('Assets/News/assets/background.png')
+        blu = Image.open('Assets/news/assets/background.png')
         background.paste(blu, (0, 0), blu)
 
         # Title
         title_font_size = 50
-        title_font = ImageFont.truetype(f'Assets/News/fonts/{self.primary_font}', title_font_size)
+        title_font = ImageFont.truetype(f'Assets/news/fonts/{self.primary_font}', title_font_size)
         draw.text((25, 520), title, TitleColor, font=title_font)
 
         # Description
@@ -113,12 +113,12 @@ class NewsGenerator:
             card.paste(card_bottom, (0, 0), card_bottom)
 
             font_size = 20
-            font = ImageFont.truetype(f'Assets/News/fonts/{self.secondary_font}', font_size)
+            font = ImageFont.truetype(f'Assets/news/fonts/{self.secondary_font}', font_size)
 
             text_width, text_height = font.getsize(title)
             while text_width > x - 20:
                 font_size = font_size - 1
-                font = ImageFont.truetype(f'Assets/News/fonts/{self.secondary_font}', font_size)
+                font = ImageFont.truetype(f'Assets/news/fonts/{self.secondary_font}', font_size)
                 text_width, text_height = font.getsize(title)
 
             canvas.text(

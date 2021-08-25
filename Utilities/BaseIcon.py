@@ -59,12 +59,12 @@ class BaseIcon:
         if not text:
             return 0
 
-        font = ImageFont.truetype(f'Assets/BaseIcon/fonts/{self.primary_font}', size=text_size)
+        font = ImageFont.truetype(f'Assets/fonts/{self.primary_font}', size=text_size)
         text_width, text_height = font.getsize(text)
         x = (512 - text_width) / 2
         while text_width > 512 - 4:
             text_size = text_size - 1
-            font = ImageFont.truetype(f'Assets/BaseIcon/fonts/{self.primary_font}', size=text_size)
+            font = ImageFont.truetype(f'Assets/fonts/{self.primary_font}', size=text_size)
             text_width, text_height = font.getsize(text)
             x = (512 - text_width) / 2
         y = 420
@@ -92,7 +92,7 @@ class BaseIcon:
             return 0
         text = text.upper()
 
-        font = ImageFont.truetype(f'Assets/BaseIcon/fonts/{self.secondary_font}', size=text_size)
+        font = ImageFont.truetype(f'Assets/fonts/{self.secondary_font}', size=text_size)
 
         if len(text) > 50:
             
@@ -105,7 +105,7 @@ class BaseIcon:
             
             while text_width / 2 > 512 - 4:
                 text_size = text_size - 1
-                font = ImageFont.truetype(f'Assets/BaseIcon/fonts/{self.secondary_font}', size=text_size)
+                font = ImageFont.truetype(f'Assets/fonts/{self.secondary_font}', size=text_size)
                 text_width, text_height = font.getsize(text)
 
             if len(text.split('\n')) > 2:
@@ -126,7 +126,7 @@ class BaseIcon:
             x = (512 - text_width) / 2
             while text_width > 512 - 4:
                 text_size = text_size - 1
-                font = ImageFont.truetype(f'Assets/BaseIcon/fonts/{self.secondary_font}', size=text_size)
+                font = ImageFont.truetype(f'Assets/fonts/{self.secondary_font}', size=text_size)
                 text_width, text_height = font.getsize(text)
                 x = (512 - text_width) / 2
             y = 455
@@ -144,7 +144,7 @@ class BaseIcon:
             return 0
 
         text_size = 17
-        font = ImageFont.truetype('Assets/BaseIcon/fonts/BurbankBigRegular-Black.otf', size=text_size)
+        font = ImageFont.truetype('Assets/fonts/BurbankBigRegular-Black.otf', size=text_size)
         if side == 'left':
             text = f'C{text.chapter} S{text.season}'
             text_width, text_height = font.getsize(text)

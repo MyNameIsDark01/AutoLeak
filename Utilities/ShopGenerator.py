@@ -35,7 +35,7 @@ class ShopGenerator:
 
         shop_image = Image.new("RGB", (2544, height))
 
-        background = Image.open(f"Assets/Shop/background.png")
+        background = Image.open(f"Assets/shop/background.png")
         background = ImageUtil.ratio_resize(
             background, shop_image.width, shop_image.height
         )
@@ -43,7 +43,7 @@ class ShopGenerator:
             background, ImageUtil.center_x(background.width, shop_image.width, 0)
         )
 
-        logo = Image.open("Assets/Shop/logo.png")
+        logo = Image.open("Assets/shop/logo.png")
         logo = ImageUtil.ratio_resize(logo, 2544, logo.height)
         shop_image.paste(
             logo, ImageUtil.center_x(logo.width, shop_image.width, 0), logo
@@ -51,7 +51,7 @@ class ShopGenerator:
 
         canvas = ImageDraw.Draw(shop_image, 'RGB')
 
-        font = ImageFont.truetype(f"Assets/BaseIcon/fonts/{self.primary_font}", 48)
+        font = ImageFont.truetype(f"Assets/fonts/{self.primary_font}", 48)
 
         data = "" # date.upper()
 
@@ -233,7 +233,7 @@ class ShopGenerator:
         vbucks = Image.open("Assets/BaseIcon/vbucks_card.png")
         vbucks = ImageUtil.ratio_resize(vbucks, 17, 17)
 
-        font = ImageFont.truetype(f"Assets/BaseIcon/fonts/{self.primary_font}", 17)
+        font = ImageFont.truetype(f"Assets/fonts/{self.primary_font}", 17)
         try:
             final_price = str(f"{final_price:,}")
         except ValueError:
@@ -253,12 +253,12 @@ class ShopGenerator:
         )
         
         text_size = 32
-        font = ImageFont.truetype(f"Assets/BaseIcon/fonts/{self.primary_font}", text_size)
+        font = ImageFont.truetype(f"Assets/fonts/{self.primary_font}", text_size)
         item_name = name.upper()
         text_width, _ = font.getsize(item_name)
         while text_width > 282:
             text_size = text_size - 1
-            font = ImageFont.truetype(f"Assets/BaseIcon/fonts/{self.primary_font}", text_size)
+            font = ImageFont.truetype(f"Assets/fonts/{self.primary_font}", text_size)
             text_width, text_height = font.getsize(item_name)
 
         canvas.text(

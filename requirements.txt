@@ -3,3 +3,4 @@ httpx
 py-getch
 pillow
 colorama
+coloredlogs

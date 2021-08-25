@@ -34,8 +34,26 @@ class FortniteIO:
         if res.status_code == 200:
             data = res.json()
             if data['result']:
-                data = res.json()['weapons']
+                data = data.get('weapons', [])
                 if len(data) > 0:
                     return [Weapon(i) for i in data]
-            elif data['code'] == ['MISSING_API_KEY', 'INVALID_API_KEY']:
+        elif res.status_code == 401:
+            data = res.json()
+            if data['code'] == ['MISSING_API_KEY', 'INVALID_API_KEY']:
+                exit(pause(Fore.RED + "API Key isn't defined or isn't valid."))
+
+    def get_challenges(self):
+        res = self.http.get(
+            url="https://fortniteapi.io/v2/challenges?season=current",
+            headers=self.headers,
+            params=self.params
+        )
+        if res.status_code == 200:
+            data = res.json()
+            if data['result']:
+                data = data.get('bundles', [])
+                return data
+        elif res.status_code == 401:
+            data = res.json()
+            if data['code'] == ['MISSING_API_KEY', 'INVALID_API_KEY']:
                 exit(pause(Fore.RED + "API Key isn't defined or isn't valid."))

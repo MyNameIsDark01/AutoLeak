@@ -20,7 +20,7 @@ from Services.Cosmetic import CosmeticSearch
 from Services.News import News
 from Services.Shop import ShopUpdate
 from Services.Section import ShopSection
-
+from Services.Bundle import BundleService
 
 from Utilities.Errors import NoDigit
 from Utilities.Twitter import TwitterClient
@@ -40,7 +40,7 @@ class Main:
             coloredlogs.install(fmt="[%(asctime)s] %(message)s", datefmt="%I:%M:%S", logger=self.log)
             colorama.init(autoreset=True)
             
-            settings = json.loads(open("settings.json").read())
+            settings = json.loads(open("test.json").read())
 
             self.name = settings.get('name')
             self.footer = settings.get('footer')
@@ -152,6 +152,7 @@ class Main:
         news = News(self)
         shopgen = ShopUpdate(self)
         shopsection = ShopSection(self)
+        bundles = BundleService(self)
 
         choices = {
             1: build.main,
@@ -162,7 +163,8 @@ class Main:
             6: imageUtil.merge_icons,
             7: news.main,
             8: shopsection.main,
-            9: shopgen.main
+            9: shopgen.main,
+            10: bundles.get_challenge_bundles,
         }
 
         if isinstance(x, str):
@@ -175,8 +177,8 @@ class Main:
 
 
 if __name__ == '__main__':
-    ## if os.path.isfile('log.txt'):
-    ##    os.remove('log.txt')
+    if os.path.isfile('log.txt'):
+        os.remove('log.txt')
 
     logging.basicConfig(handlers=[
             RotatingFileHandler(filename='log.txt', mode='w', maxBytes=512000, backupCount=4)

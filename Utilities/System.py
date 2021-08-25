@@ -8,11 +8,11 @@ class SystemUtil:
         self.platform = data.platform
         self.version = data.version
     
-    def create_box(self, platform: str = "Linux"):
+    def create_box(self):
         def Mbox(title, text, style):
             return ctypes.windll.user32.MessageBoxW(0, text, title, style)
 
-        if platform != "Windows":
+        if self.platform != "Windows":
             return 0
 
         number = random.randint(1, 2)
@@ -22,15 +22,14 @@ class SystemUtil:
                 webbrowser.open_new('https://discord.gg/UZgHArwp4f')
 
     def change_title(self):
-        plat = self.platform
-        self.clear(plat)
+        self.clear()
 
-        if plat == "Windows":
+        if self.platform == "Windows":
             os.system("TITLE AutoLeak / Created by MyNameIsDark01.")
-        self.create_box(plat)
+        self.create_box()
 
-    def clear(self, platform: str = "Windows"):
-        if platform == "Windows":
+    def clear(self):
+        if self.platform == "Windows":
             os.system("cls")
-        elif platform == "Linux":
+        elif self.platform == "Linux":
             os.system("clear")

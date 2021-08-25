@@ -18,7 +18,9 @@ class BuildUpdate:
         self.name = data.name
         self.footer = data.footer
         self.language = data.language
-
+        self.watermark = data.watermark
+        self.placeholder = data.placeholder
+        
         self.twitter = data.twitter
         self.tweetUpdate = data.tweetUpdate
         self.tweetAes = data.tweetAes
@@ -127,7 +129,7 @@ class BuildUpdate:
             self.log.info(Fore.CYAN + f"{count}/{len(new_cosmetics)} - {round(percentage)}%\n")
             count += 1
 
-        ImageUtil.merge_icons(image_list, 'NewCosmetics.jpg')
+        baseIcon.merge_icons(image_list, 'NewCosmetics.jpg')
         print("!  !  !  !  !  !  !")
         print(f"IMAGE GENERATING COMPLETE - Generated images in {round(time.time() - start_time, 2)} seconds")
         print("!  !  !  !  !  !  !")

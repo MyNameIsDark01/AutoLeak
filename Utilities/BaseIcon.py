@@ -1,8 +1,10 @@
-import re
 import os
 import textwrap
+import glob
 
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from math import ceil, sqrt
+from typing import Union
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 from colorama import Fore
 
 from Utilities.ImageUtil import ImageUtil
@@ -11,6 +13,8 @@ from Utilities.ImageUtil import ImageUtil
 class BaseIcon:
     def __init__(self, data):
         self.log = data.log
+        self.watermark = data.watermark
+        self.placeholder = data.placeholder
         self.language = data.language
 
         self.primary_font = ImageUtil.get_font(self.language, 'name')
@@ -40,8 +44,7 @@ class BaseIcon:
         # Paste soft text onto background
         background.paste(blurred, blurred)
 
-    def draw_preview_image(_, ret: Image, icon):
-        """"""
+    def draw_preview_image(self, ret: Image, icon):
         if icon.images.featured:
             image = icon.images.featured
         elif icon.images.icon:
@@ -49,9 +52,22 @@ class BaseIcon:
         else:
             image = icon.images.smallIcon
 
-        preview_image = ImageUtil.download_image(image)
-        preview_image = preview_image.resize((512, 512), Image.ANTIALIAS)
-        ret.paste(preview_image, preview_image)
+        if not image and os.path.isfile('Assets/TBD.png'):
+            image = Image.open("Assets/TBD.png")
+        elif not image:
+            image = Image.open("Assets/DoNotDelete.png")
+        else:
+            image = ImageUtil.download_image(image)
+            if os.path.isfile('Assets/DoNotDelete.png') and os.path.isfile(f'Assets/{self.placeholder}'):
+                TBD = Image.open('Assets/DoNotDelete.png')
+
+                diff = ImageChops.difference(TBD, image)
+
+                if diff.getbbox() is None:
+                    image = Image.open(f"Assets/{self.placeholder}")
+
+        image = ImageUtil.ratio_resize(image, 512, 512)
+        ret.paste(image, image)
 
     def draw_display_name(self, ret, c, icon):
         text_size = 32
@@ -175,6 +191,51 @@ class BaseIcon:
     def draw_user_flacing(self, ret):
         cb = Image.open('Assets/BaseIcon/cbimage.png')
         ret.paste(cb, cb)
+
+    def merge_icons(self, datas: Union[list, None] = None, save_as: str = 'merge.jpg'):
+        if not datas:
+            datas = [Image.open(i) for i in glob.glob('Cache/images/*.png')]
+
+        row_n = len(datas)
+        if os.path.isfile(f'Assets/{self.watermark}'):
+            row_n += 1
+            
+        rowslen = ceil(sqrt(row_n))
+        columnslen = round(sqrt(row_n))
+
+        mode = "RGB"
+        px = 512
+
+        rows = rowslen * px
+        columns = columnslen * px
+        image = Image.new(mode, (rows, columns))
+
+        i = 0
+
+        for card in datas:
+            image.paste(
+                card,
+                ((0 + ((i % rowslen) * card.width)),
+                 (0 + ((i // rowslen) * card.height)))
+            )
+
+            i += 1
+
+        if os.path.isfile(f"Assets/{self.watermark}"):
+            card = Image.open(f'Assets/{self.watermark}')
+            card = ImageUtil.ratio_resize(card, 512, 512)
+            image.paste(
+                card,
+                ((0 + ((i % rowslen) * card.width)),
+                 (0 + ((i // rowslen) * card.height)))
+            )
+
+            i += 1
+
+        if save_as and len(save_as) > 4:
+            image.save(f"Cache/{save_as}")
+
+        return image
 
     def main(self, data):
         icon = data

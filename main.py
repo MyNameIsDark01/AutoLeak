@@ -44,6 +44,8 @@ class Main:
 
             self.name = settings.get('name')
             self.footer = settings.get('footer')
+            self.watermark = settings.get('watermark')
+            self.placeholder = settings.get('placeholderImage')
 
             language = settings.get('language')
             check = self.check_language_code(language)

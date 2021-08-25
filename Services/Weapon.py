@@ -8,6 +8,8 @@ from Utilities.ImageUtil import ImageUtil
 class Weapon:
     def __init__(self, data):
         self.log = data.log
+        self.watermark = data.watermark
+        self.placeholder = data.placeholder
         
         self.api = data.api[1]
         self.language = data.language
@@ -30,7 +32,7 @@ class Weapon:
         baseIcon = BaseIcon(self)
         image_list = [baseIcon.main(i) for i in weapons]
         if len(image_list) > 0:
-            image = ImageUtil.merge_icons(image_list, f"{ask}.jpg")
+            image = baseIcon.merge_icons(image_list, f"{ask}.jpg")
         else:
             image = image_list[0]
 

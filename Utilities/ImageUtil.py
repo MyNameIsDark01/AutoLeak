@@ -1,5 +1,6 @@
 import requests
 import glob
+import os
 
 from math import sqrt, ceil
 from PIL import Image
@@ -63,7 +64,7 @@ class ImageUtil:
         if not datas:
             datas = [Image.open(i) for i in glob.glob('Cache/images/*.png')]
 
-        row_n = len(datas)
+        row_n = len(datas)            
         rowslen = ceil(sqrt(row_n))
         columnslen = round(sqrt(row_n))
 

@@ -10,6 +10,9 @@ class CosmeticSearch:
         self.log = data.log
         self.platform = data.platform
 
+        self.watermark = data.watermark
+        self.placeholder = data.placeholder
+
         self.api = data.api[0]
         self.language = data.language
 
@@ -24,7 +27,7 @@ class CosmeticSearch:
         base = BaseIcon(self)
         image_list = [base.main(i) for i in cosmetic]
         if len(image_list) > 1:
-            image = ImageUtil.merge_icons(image_list, f'{ask}.jpg')
+            image = base.merge_icons(image_list, f'{ask}.jpg')
         else:
             image = image_list[0]
 
@@ -42,7 +45,7 @@ class CosmeticSearch:
         base = BaseIcon(self)
         image_list = [base.main(i) for i in cosmetic]
         if len(image_list) > 1:
-            image = ImageUtil.merge_icons(image_list, f'{ask}.jpg')
+            image = base.merge_icons(image_list, f'{ask}.jpg')
         else:
             image = image_list[0]
 

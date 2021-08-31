@@ -184,12 +184,12 @@ class ShopGenerator:
         card = Image.new("RGBA", (288, 288))
 
         try:
-            layer = Image.open(f"Assets/BaseIcon/images/card_background_{rarity.lower()}.png")
+            layer = Image.open(f"Assets/icon/cataba/card_background_{rarity.lower()}.png")
             layer = ImageUtil.ratio_resize(layer, 288, 288)
         except FileNotFoundError:
             print(rarity)
             print(f"Failed to open card_background_{rarity.lower()}.png")
-            layer = Image.open("Assets/BaseIcon/images/card_background_common.png")
+            layer = Image.open("Assets/icon/cataba/card_background_common.png")
             layer = ImageUtil.ratio_resize(layer, 288, 288)
 
         if layer is not None:
@@ -219,18 +219,18 @@ class ShopGenerator:
                 )
 
         try:
-            layer = Image.open(f"Assets/BaseIcon/images/card_faceplate_{rarity.lower()}.png")
+            layer = Image.open(f"Assets/icon/cataba/card_faceplate_{rarity.lower()}.png")
             layer = ImageUtil.ratio_resize(layer, 288, 288)
         except FileNotFoundError:
             print(f"Failed to open card_faceplate_{rarity.lower()}.png")
-            layer = Image.open("Assets/BaseIcon/images/card_faceplate_common.png")
+            layer = Image.open("Assets/icon/cataba/card_faceplate_common.png")
             layer = ImageUtil.ratio_resize(layer, 288, 288)
 
         card.paste(layer, (0, 0), layer)
 
         canvas = ImageDraw.Draw(card)
 
-        vbucks = Image.open("Assets/BaseIcon/vbucks_card.png")
+        vbucks = Image.open("Assets/icon/cataba/vbucks_card.png")
         vbucks = ImageUtil.ratio_resize(vbucks, 17, 17)
 
         font = ImageFont.truetype(f"Assets/fonts/{self.primary_font}", 17)

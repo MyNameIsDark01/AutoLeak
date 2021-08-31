@@ -7,7 +7,6 @@ from colorama import Fore
 from getch import pause
 
 from Utilities.BaseIcon import BaseIcon
-from Utilities.ImageUtil import ImageUtil
 from Rest.Models.FortniteApi import Build, NewCosmetics
 
 
@@ -28,6 +27,9 @@ class BuildUpdate:
         self.cosmeticText = data.cosmeticText
 
         self.api = data.api[0]
+        if data.benBot:
+            self.api = data.api[2]
+        
         self.delay = data.delay
 
     def main(self):
@@ -59,7 +61,7 @@ class BuildUpdate:
             old_aeskey = old_aes.mainKey
 
             if build != old_build:
-                self.log.info(Fore.YELLOW + f'\nDetected build update! -> [{count}]')
+                self.log.info(Fore.YELLOW + f'Detected build update! -> [{count}]')
                 if self.tweetUpdate:
                     self.tweet_build(build)
 
@@ -149,7 +151,7 @@ class BuildUpdate:
         footer = self.footer
 
         try:
-            self.twitter.update_status(f"[{name}] Current Fortnite AES Key:\n\n0x{key}\n\n{footer}")
+            self.twitter.update_status(f"[{name}] Current Fortnite AES Key:\n\n{key}\n\n{footer}")
             self.log.info(Fore.GREEN+ "Tweeted current aes key!")
         except Exception as e:
             self.log.error(Fore.RED + f"Failed to tweet aes key! ({e})")

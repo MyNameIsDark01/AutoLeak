@@ -1,7 +1,8 @@
 import requests
 import glob
-import os
 
+from urllib3.util.retry import Retry
+from requests.adapters import HTTPAdapter
 from math import sqrt, ceil
 from PIL import Image
 from typing import List, Union
@@ -39,9 +40,18 @@ class ImageUtil:
 
     @staticmethod
     def download_image(url):
-        res = requests.get(url, stream=True)
-        if res.status_code == 200:
-            return Image.open(res.raw).convert('RGBA')
+        try:
+            s = requests.Session()
+
+            retries = Retry(total=5,
+                            status_forcelist=[500, 502, 503, 504])
+
+            s.mount('https://', HTTPAdapter(max_retries=retries))
+            res = s.get(url, stream=True, timeout=3)
+            if res.status_code == 200:
+                return Image.open(res.raw).convert('RGBA')
+        except requests.exceptions.ReadTimeout:
+            return 0
     
     @staticmethod
     def center_x(foreground_width: int, background_width: int, height: int):

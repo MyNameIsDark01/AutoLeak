@@ -101,9 +101,9 @@ class Images:
 class Build:
     def __init__(self, data):
         self.build = data.get('build')
-        self.mainKey = data.get('mainKey')
+        self.mainKey = '0x' + data.get('mainKey')
         self.dynamicKeys = [i for i in data.get('dynamicKeys')]
-        self.updated = data.get('updated')
+        self.updated = data.get('updated') # Not used yet
 
     def json(self):
         return json.dumps(self, default=lambda o: o.__dict__)
@@ -113,7 +113,7 @@ class DynamicKey:
     def __init__(self, data):
         self.pakFilename = data.get('pakFilename')
         self.pakGuid = data.get('pakGuid')
-        self.key = data.get('key')
+        self.key = '0x' + data.get('key')
 
 
 class NewsV2:

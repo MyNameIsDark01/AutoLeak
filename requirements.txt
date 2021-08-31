@@ -4,3 +4,4 @@ py-getch
 pillow
 colorama
 coloredlogs
+backoff

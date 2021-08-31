@@ -17,22 +17,27 @@ class BaseIcon:
         self.placeholder = data.placeholder
         self.language = data.language
 
+        self.iconStyle = 'cataba'
+        self.path = 'Assets/icon'+ self.iconStyle
+        if not os.path.exists(self.path):
+            self.path = 'Assets/icon/cataba'
+
         self.primary_font = ImageUtil.get_font(self.language, 'name')
         self.secondary_font = ImageUtil.get_font(self.language, 'description')
 
     def draw_background(_, ret: Image, icon):
         try:
-            background = Image.open(f'Assets/BaseIcon/images/card_background_{icon.rarity.value}.png')
+            background = Image.open(f'Assets/icon/cataba/card_background_{icon.rarity.value}.png')
         except FileNotFoundError:
-            background = Image.open(f'Assets/BaseIcon/images/card_background_common.png')
+            background = Image.open(f'Assets/icon/cataba/card_background_common.png')
         background = background.resize((512, 512), Image.ANTIALIAS)
         ret.paste(background)
 
     def draw_foreground(_, ret: Image, icon):
         try:
-            foreground = Image.open(f'Assets/BaseIcon/images/card_faceplate_{icon.rarity.value}.png')
+            foreground = Image.open(f'Assets/icon/cataba/card_faceplate_{icon.rarity.value}.png')
         except FileNotFoundError:
-            foreground = Image.open(f'Assets/BaseIcon/images/card_faceplate_common.png')
+            foreground = Image.open(f'Assets/icon/cataba/card_faceplate_common.png')
         ret.paste(foreground, foreground)
 
     def draw_text_background(_, background: Image, text: str, x: int, y: int, font: ImageFont, fill: tuple):
@@ -58,6 +63,7 @@ class BaseIcon:
             image = Image.open("Assets/DoNotDelete.png")
         else:
             image = ImageUtil.download_image(image)
+            if not image: return 0
             if os.path.isfile('Assets/DoNotDelete.png') and os.path.isfile(f'Assets/{self.placeholder}'):
                 TBD = Image.open('Assets/DoNotDelete.png')
 
@@ -70,10 +76,10 @@ class BaseIcon:
         ret.paste(image, image)
 
     def draw_display_name(self, ret, c, icon):
+        if not icon.name: return 0
+        
         text_size = 32
         text = icon.name.upper()
-        if not text:
-            return 0
 
         font = ImageFont.truetype(f'Assets/fonts/{self.primary_font}', size=text_size)
         text_width, text_height = font.getsize(text)
@@ -189,7 +195,7 @@ class BaseIcon:
             )
 
     def draw_user_flacing(self, ret):
-        cb = Image.open('Assets/BaseIcon/cbimage.png')
+        cb = Image.open('Assets/icon/cataba/cbimage.png')
         ret.paste(cb, cb)
 
     def merge_icons(self, datas: Union[list, None] = None, save_as: str = 'merge.jpg'):

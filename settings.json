@@ -5,6 +5,7 @@
 	"placeholderImage": "TBD.png",
 	"watermark": "ZZZ.png",
 	"delay": 5,
+	"benBot": false,
 	"twitter": {
 		"isEnabled": false,
 		"apiKey": "",

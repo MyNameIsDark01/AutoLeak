@@ -11,6 +11,7 @@ from getch import pause
 from colorama import Fore
 from typing import Union, List
 
+from Rest.Getters.BenBot import BenBot
 from Rest.Getters.FortniteApi import FortniteApi
 from Rest.Getters.FortniteIO import FortniteIO
 
@@ -50,6 +51,7 @@ class Main:
             language = settings.get('language')
             check = self.check_language_code(language)
             self.language = language if check else 'en'
+            self.benBot = settings.get('benBot', False)
 
             twitter = settings.get('twitter', {})
             self.twitter = None
@@ -84,7 +86,7 @@ class Main:
                 settings.get('apiKey', {})[i]
                 for i in list(settings.get('apiKey', {}))
             ]
-            self.api = [FortniteApi(self), FortniteIO(self)]
+            self.api = [FortniteApi(self), FortniteIO(self), BenBot(self)]
             self.delay = settings.get('delay', 5)
         except json.decoder.JSONDecodeError:
             exit(pause(Fore.RED + 'Wrong json formatting.'))
@@ -95,7 +97,7 @@ class Main:
 
     # ==> Main Thread
     def main(self):
-        SystemUtil(self).change_title()
+        #SystemUtil(self).change_title()
         self.welcome()
         choice = input('>> ')
         try:
